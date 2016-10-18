@@ -70,20 +70,31 @@ int main(void)
   */
 
   /* TODO - Add your application code here */
+  LED_init();
+  adc_init();
+  nvic_init();
+  usart_init();
 
 
   /* Infinite loop */
   while (1)
   {
+	  /* Start ADC Software Conversion */
+	  ADC_SoftwareStartConv(ADC1);
+	  while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC)){}
 	  AD_value=ADC_GetConversionValue(ADC1);
 
 	  uint64_t interval = AD_value*25;
 
-	  for (i=0; i < interval; i++){
-	  	   }
-	  	   GPIO_ToggleBits(GPIOA, GPIO_Pin_5);
+	  for (i=0; i < interval; i++){}
+
+	  GPIO_ToggleBits(GPIOA, GPIO_Pin_5);
+
+	  USART_ClearFlag(USART2, USART_FLAG_TC);
+	  USART_SendData(USART2, 'A');
+
+  //return 0;
   }
-  return 0;
 }
 
 #ifdef  USE_FULL_ASSERT
