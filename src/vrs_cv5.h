@@ -8,6 +8,12 @@
 #ifndef VRS_CV5_H_
 #define VRS_CV5_H_
 
+#include "stm32l1xx.h"
 
+void adc_init(void);
+void nvic_init(void);
+void uart_init (void);
+void ADC1_IRQHandler (void);
+void USART1_IRQHandler (void);
 
 #endif /* VRS_CV5_H_ */

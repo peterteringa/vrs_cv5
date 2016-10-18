@@ -29,6 +29,7 @@ SOFTWARE.
 /* Includes */
 #include <stddef.h>
 #include "stm32l1xx.h"
+#include "vrs_cv5.h"
 
 
 /* Private typedef */
@@ -74,9 +75,6 @@ int main(void)
   /* Infinite loop */
   while (1)
   {
-	  /* Start ADC Software Conversion */
-	  ADC_SoftwareStartConv(ADC1);
-	  while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC)){}
 	  AD_value=ADC_GetConversionValue(ADC1);
 
 	  uint64_t interval = AD_value*25;
