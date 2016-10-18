@@ -31,9 +31,6 @@ void adc_init(void)
 	 /* Enable the ADC */
 	 ADC_Cmd(ADC1, ENABLE);
 
-	 ADC_ITConfig(ADC1, ADC_IT_EOC, ENABLE);
-	 ADC_ITConfig(ADC1, ADC_IT_OVR, ENABLE);
-
 	 /* Wait until the ADC1 is ready */
 	 while(ADC_GetFlagStatus(ADC1, ADC_FLAG_ADONS) == RESET)
 	 {
@@ -50,6 +47,9 @@ void nvic_init(void) {
 	//NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
+
+	ADC_ITConfig(ADC1, ADC_IT_EOC, ENABLE);
+	ADC_ITConfig(ADC1, ADC_IT_OVR, ENABLE);
 }
 
 

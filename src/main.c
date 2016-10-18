@@ -49,6 +49,7 @@ SOFTWARE.
 int main(void)
 {
   int i = 0;
+  uint16_t AD_value = 0;
 
   /**
   *  IMPORTANT NOTE!
@@ -73,7 +74,16 @@ int main(void)
   /* Infinite loop */
   while (1)
   {
-	i++;
+	  /* Start ADC Software Conversion */
+	  ADC_SoftwareStartConv(ADC1);
+	  while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC)){}
+	  AD_value=ADC_GetConversionValue(ADC1);
+
+	  uint64_t interval = AD_value*25;
+
+	  for (i=0; i < interval; i++){
+	  	   }
+	  	   GPIO_ToggleBits(GPIOA, GPIO_Pin_5);
   }
   return 0;
 }
