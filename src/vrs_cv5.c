@@ -1,5 +1,7 @@
 #include "vrs_cv5.h"
 
+//extern volatile uint16_t AD_value = 0;
+
 void LED_init (void){
 
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
@@ -87,7 +89,7 @@ void nvic_init(void) {
 	NVIC_Init(&NVIC_InitStructure);
 
 	USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);
-	USART_ITConfig(USART2, USART_IT_TXE, DISABLE);
+	USART_ITConfig(USART2, USART_IT_TXE, ENABLE);
 }
 
 void usart_init (void){
@@ -122,9 +124,44 @@ void usart_init (void){
 }
 
 /*void ADC1_IRQHandler (void){
+	if (ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC)){
+		AD_value=ADC_GetConversionValue(ADC1)*1000/4095*33;
+	}
 }
 
 void USART2_IRQHandler (void){
 
-}*/
+	  uint16_t k = AD_value/10000;
+	  AD_value -= k*10000;
+	  k += '0';
+	  USART_ClearFlag(USART2, USART_FLAG_TC);
+	  USART_SendData(USART2, k);
+	  while (!USART_GetFlagStatus(USART2, USART_FLAG_TC)) {}
 
+	  USART_ClearFlag(USART2, USART_FLAG_TC);
+	  USART_SendData(USART2, ',');
+	  while (!USART_GetFlagStatus(USART2, USART_FLAG_TC)) {}
+
+	  k = AD_value/1000;
+	  AD_value -= k*1000;
+	  k += '0';
+	  USART_ClearFlag(USART2, USART_FLAG_TC);
+	  USART_SendData(USART2, k);
+	  while (!USART_GetFlagStatus(USART2, USART_FLAG_TC)) {}
+
+	  k = AD_value/100;
+	  AD_value -= k*100;
+	  k += '0';
+	  USART_ClearFlag(USART2, USART_FLAG_TC);
+	  USART_SendData(USART2, k);
+	  while (!USART_GetFlagStatus(USART2, USART_FLAG_TC)) {}
+
+	  USART_ClearFlag(USART2, USART_FLAG_TC);
+	  USART_SendData(USART2, 'V');
+	  while (!USART_GetFlagStatus(USART2, USART_FLAG_TC)) {}
+
+	  USART_ClearFlag(USART2, USART_FLAG_TC);
+	  USART_SendData(USART2, ' ');
+	  while (!USART_GetFlagStatus(USART2, USART_FLAG_TC)) {}
+}
+*/

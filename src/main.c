@@ -51,6 +51,7 @@ int main(void)
 {
   int i = 0;
   uint16_t AD_value = 0;
+  uint16_t k = 0;
 
   /**
   *  IMPORTANT NOTE!
@@ -82,16 +83,46 @@ int main(void)
 	  /* Start ADC Software Conversion */
 	  ADC_SoftwareStartConv(ADC1);
 	  while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC)){}
-	  AD_value=ADC_GetConversionValue(ADC1);
+	  AD_value=ADC_GetConversionValue(ADC1)*1000/4095*33;
 
-	  uint64_t interval = AD_value*25;
+	  //uint64_t interval = AD_value*3;
 
-	  for (i=0; i < interval; i++){}
+	  for (i=0; i < 100000; i++){}
 
 	  GPIO_ToggleBits(GPIOA, GPIO_Pin_5);
 
+	  k = AD_value/10000;
+	  AD_value -= k*10000;
+	  k += '0';
 	  USART_ClearFlag(USART2, USART_FLAG_TC);
-	  USART_SendData(USART2, 'A');
+	  USART_SendData(USART2, k);
+	  while (!USART_GetFlagStatus(USART2, USART_FLAG_TC)) {}
+
+	  USART_ClearFlag(USART2, USART_FLAG_TC);
+	  USART_SendData(USART2, ',');
+	  while (!USART_GetFlagStatus(USART2, USART_FLAG_TC)) {}
+
+	  k = AD_value/1000;
+	  AD_value -= k*1000;
+	  k += '0';
+	  USART_ClearFlag(USART2, USART_FLAG_TC);
+	  USART_SendData(USART2, k);
+	  while (!USART_GetFlagStatus(USART2, USART_FLAG_TC)) {}
+
+	  k = AD_value/100;
+	  AD_value -= k*100;
+	  k += '0';
+	  USART_ClearFlag(USART2, USART_FLAG_TC);
+	  USART_SendData(USART2, k);
+	  while (!USART_GetFlagStatus(USART2, USART_FLAG_TC)) {}
+
+	  USART_ClearFlag(USART2, USART_FLAG_TC);
+	  USART_SendData(USART2, 'V');
+	  while (!USART_GetFlagStatus(USART2, USART_FLAG_TC)) {}
+
+	  USART_ClearFlag(USART2, USART_FLAG_TC);
+	  USART_SendData(USART2, ' ');
+	  while (!USART_GetFlagStatus(USART2, USART_FLAG_TC)) {}
 
   //return 0;
   }
