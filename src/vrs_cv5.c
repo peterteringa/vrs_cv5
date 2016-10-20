@@ -1,6 +1,6 @@
 #include "vrs_cv5.h"
 
-//extern volatile uint16_t AD_value = 0;
+extern volatile uint16_t AD_value = 0, i = 0;
 
 void LED_init (void){
 
@@ -45,7 +45,7 @@ void adc_init(void)
 
 	 /* ADC1 configuration */
 	 ADC_InitStruct.ADC_Resolution 				= ADC_Resolution_12b;
-	 ADC_InitStruct.ADC_ContinuousConvMode 		= DISABLE;
+	 ADC_InitStruct.ADC_ContinuousConvMode 		= ENABLE;
 	 ADC_InitStruct.ADC_ExternalTrigConvEdge 	= ADC_ExternalTrigConvEdge_None;
 	 ADC_InitStruct.ADC_DataAlign 				= ADC_DataAlign_Right;
 	 ADC_InitStruct.ADC_NbrOfConversion 		= 1;
@@ -53,7 +53,7 @@ void adc_init(void)
 	 ADC_Init(ADC1, &ADC_InitStruct);
 
 	/* ADCx regular channel8 configuration */
-	 ADC_RegularChannelConfig(ADC1, ADC_Channel_0, 1, ADC_SampleTime_16Cycles);
+	 ADC_RegularChannelConfig(ADC1, ADC_Channel_0, 1, ADC_SampleTime_384Cycles);
 
 	 /* Enable the ADC */
 	 ADC_Cmd(ADC1, ENABLE);
@@ -78,7 +78,7 @@ void nvic_init(void) {
 
 	NVIC_Init(&NVIC_InitStructure);
 
-	//ADC_ITConfig(ADC1, ADC_IT_EOC, ENABLE);
+	ADC_ITConfig(ADC1, ADC_IT_EOC, ENABLE);
 	//ADC_ITConfig(ADC1, ADC_IT_OVR, ENABLE);
 
 	NVIC_InitStructure.NVIC_IRQChannel 						= USART2_IRQn;
@@ -123,45 +123,34 @@ void usart_init (void){
 	USART_Cmd(USART2, ENABLE);
 }
 
-/*void ADC1_IRQHandler (void){
+void ADC1_IRQHandler (void){
 	if (ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC)){
-		AD_value=ADC_GetConversionValue(ADC1)*1000/4095*33;
+		AD_value = ADC_GetConversionValue(ADC1);
+		if (i == 0) {
+			USART_ClearFlag(USART2, USART_FLAG_TC);
+			USART_SendData(USART2, '_');
+		}
 	}
 }
 
 void USART2_IRQHandler (void){
+	uint16_t napatie[6];
+	uint16_t pom = AD_value;
+	//uint8_t i = 0;
 
-	  uint16_t k = AD_value/10000;
-	  AD_value -= k*10000;
-	  k += '0';
-	  USART_ClearFlag(USART2, USART_FLAG_TC);
-	  USART_SendData(USART2, k);
-	  while (!USART_GetFlagStatus(USART2, USART_FLAG_TC)) {}
-
-	  USART_ClearFlag(USART2, USART_FLAG_TC);
-	  USART_SendData(USART2, ',');
-	  while (!USART_GetFlagStatus(USART2, USART_FLAG_TC)) {}
-
-	  k = AD_value/1000;
-	  AD_value -= k*1000;
-	  k += '0';
-	  USART_ClearFlag(USART2, USART_FLAG_TC);
-	  USART_SendData(USART2, k);
-	  while (!USART_GetFlagStatus(USART2, USART_FLAG_TC)) {}
-
-	  k = AD_value/100;
-	  AD_value -= k*100;
-	  k += '0';
-	  USART_ClearFlag(USART2, USART_FLAG_TC);
-	  USART_SendData(USART2, k);
-	  while (!USART_GetFlagStatus(USART2, USART_FLAG_TC)) {}
-
-	  USART_ClearFlag(USART2, USART_FLAG_TC);
-	  USART_SendData(USART2, 'V');
-	  while (!USART_GetFlagStatus(USART2, USART_FLAG_TC)) {}
-
-	  USART_ClearFlag(USART2, USART_FLAG_TC);
-	  USART_SendData(USART2, ' ');
-	  while (!USART_GetFlagStatus(USART2, USART_FLAG_TC)) {}
+		if (USART2->SR & USART_FLAG_TC){
+			if (i == 0){
+				pom = AD_value;
+				napatie[0] 	= 	(pom/10000)%10 + '0';
+				napatie[1] 	= 	',';
+				napatie[2] 	= 	(pom/1000)%10  + '0';
+				napatie[3] 	= 	(pom/100)%10   + '0';
+				napatie[4] 	= 	'V';
+				napatie[5] 	= 	' ';
+			}
+			USART_ClearFlag(USART2, USART_FLAG_TC);
+			USART_SendData(USART2, napatie[i]);
+			i++;
+			if (i >= 6)	i=0;
+		}
 }
-*/

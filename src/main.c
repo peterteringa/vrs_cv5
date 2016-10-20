@@ -49,17 +49,13 @@ SOFTWARE.
 */
 int main(void)
 {
-  int i = 0;
-  uint16_t AD_value = 0;
-  uint16_t k = 0;
-
   /**
   *  IMPORTANT NOTE!
-  *  See the <system_*.c> file and how/if the SystemInit() function updates 
-  *  SCB->VTOR register. Sometimes the symbol VECT_TAB_SRAM needs to be defined 
-  *  when building the project if code has been located to RAM and interrupts 
+  *  See the <system_*.c> file and how/if the SystemInit() function updates
+  *  SCB->VTOR register. Sometimes the symbol VECT_TAB_SRAM needs to be defined
+  *  when building the project if code has been located to RAM and interrupts
   *  are used. Otherwise the interrupt table located in flash will be used.
-  *  E.g.  SCB->VTOR = 0x20000000;  
+  *  E.g.  SCB->VTOR = 0x20000000;
   */
 
   /**
@@ -70,62 +66,25 @@ int main(void)
   *  system_stm32l1xx.c file
   */
 
+	int i = 0;
   /* TODO - Add your application code here */
   LED_init();
   adc_init();
   nvic_init();
   usart_init();
 
+  //ADC_SoftwareStartConv(ADC1);
 
   /* Infinite loop */
   while (1)
   {
-	  /* Start ADC Software Conversion */
-	  ADC_SoftwareStartConv(ADC1);
-	  while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC)){}
-	  AD_value=ADC_GetConversionValue(ADC1)*1000/4095*33;
+		for (i=0; i < 50000; i++){}
+		GPIO_ToggleBits(GPIOA, GPIO_Pin_5);
 
-	  //uint64_t interval = AD_value*3;
 
-	  for (i=0; i < 100000; i++){}
-
-	  GPIO_ToggleBits(GPIOA, GPIO_Pin_5);
-
-	  k = AD_value/10000;
-	  AD_value -= k*10000;
-	  k += '0';
-	  USART_ClearFlag(USART2, USART_FLAG_TC);
-	  USART_SendData(USART2, k);
-	  while (!USART_GetFlagStatus(USART2, USART_FLAG_TC)) {}
-
-	  USART_ClearFlag(USART2, USART_FLAG_TC);
-	  USART_SendData(USART2, ',');
-	  while (!USART_GetFlagStatus(USART2, USART_FLAG_TC)) {}
-
-	  k = AD_value/1000;
-	  AD_value -= k*1000;
-	  k += '0';
-	  USART_ClearFlag(USART2, USART_FLAG_TC);
-	  USART_SendData(USART2, k);
-	  while (!USART_GetFlagStatus(USART2, USART_FLAG_TC)) {}
-
-	  k = AD_value/100;
-	  AD_value -= k*100;
-	  k += '0';
-	  USART_ClearFlag(USART2, USART_FLAG_TC);
-	  USART_SendData(USART2, k);
-	  while (!USART_GetFlagStatus(USART2, USART_FLAG_TC)) {}
-
-	  USART_ClearFlag(USART2, USART_FLAG_TC);
-	  USART_SendData(USART2, 'V');
-	  while (!USART_GetFlagStatus(USART2, USART_FLAG_TC)) {}
-
-	  USART_ClearFlag(USART2, USART_FLAG_TC);
-	  USART_SendData(USART2, ' ');
-	  while (!USART_GetFlagStatus(USART2, USART_FLAG_TC)) {}
-
-  //return 0;
   }
+  return 0;
+
 }
 
 #ifdef  USE_FULL_ASSERT
