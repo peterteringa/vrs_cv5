@@ -16,6 +16,5 @@ void nvic_init(void);
 void usart_init(void);
 void ADC1_IRQHandler (void);
 void USART2_IRQHandler (void);
-void posli_napatie (void);
 
 #endif /* VRS_CV5_H_ */
