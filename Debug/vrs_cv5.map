@@ -1529,7 +1529,7 @@ LOAD d:/peter/programy/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atol
                 0x08000000                g_pfnVectors
                 0x0800013c                . = ALIGN (0x4)
 
-.text           0x0800013c     0x136c
+.text           0x0800013c     0x139c
                 0x0800013c                . = ALIGN (0x4)
  *(.text)
  .text          0x0800013c       0x40 d:/peter/programy/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtbegin.o
@@ -1711,84 +1711,84 @@ LOAD d:/peter/programy/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atol
                 0x08001138       0x9c src\vrs_cv5.o
                 0x08001138                adc_init
  .text.nvic_init
-                0x080011d4       0x74 src\vrs_cv5.o
+                0x080011d4       0x94 src\vrs_cv5.o
                 0x080011d4                nvic_init
  .text.usart_init
-                0x08001248       0x88 src\vrs_cv5.o
-                0x08001248                usart_init
+                0x08001268       0x88 src\vrs_cv5.o
+                0x08001268                usart_init
  .text.ADC1_IRQHandler
-                0x080012d0       0x4c src\vrs_cv5.o
-                0x080012d0                ADC1_IRQHandler
+                0x080012f0       0x4c src\vrs_cv5.o
+                0x080012f0                ADC1_IRQHandler
  .text.USART2_IRQHandler
-                0x0800131c      0x128 src\vrs_cv5.o
-                0x0800131c                USART2_IRQHandler
+                0x0800133c      0x138 src\vrs_cv5.o
+                0x0800133c                USART2_IRQHandler
  .text.__libc_init_array
-                0x08001444       0x4c d:/peter/programy/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-init.o)
-                0x08001444                __libc_init_array
+                0x08001474       0x4c d:/peter/programy/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-init.o)
+                0x08001474                __libc_init_array
  *(.glue_7)
- .glue_7        0x08001490        0x0 linker stubs
+ .glue_7        0x080014c0        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x08001490        0x0 linker stubs
+ .glue_7t       0x080014c0        0x0 linker stubs
  *(.eh_frame)
- .eh_frame      0x08001490        0x0 d:/peter/programy/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtbegin.o
+ .eh_frame      0x080014c0        0x0 d:/peter/programy/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtbegin.o
  *(.init)
- .init          0x08001490        0x4 d:/peter/programy/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crti.o
-                0x08001490                _init
- .init          0x08001494        0x8 d:/peter/programy/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtn.o
+ .init          0x080014c0        0x4 d:/peter/programy/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crti.o
+                0x080014c0                _init
+ .init          0x080014c4        0x8 d:/peter/programy/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtn.o
  *(.fini)
- .fini          0x0800149c        0x4 d:/peter/programy/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crti.o
-                0x0800149c                _fini
- .fini          0x080014a0        0x8 d:/peter/programy/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtn.o
-                0x080014a8                . = ALIGN (0x4)
-                0x080014a8                _etext = .
+ .fini          0x080014cc        0x4 d:/peter/programy/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crti.o
+                0x080014cc                _fini
+ .fini          0x080014d0        0x8 d:/peter/programy/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtn.o
+                0x080014d8                . = ALIGN (0x4)
+                0x080014d8                _etext = .
 
-.vfp11_veneer   0x080014a8        0x0
- .vfp11_veneer  0x080014a8        0x0 linker stubs
+.vfp11_veneer   0x080014d8        0x0
+ .vfp11_veneer  0x080014d8        0x0 linker stubs
 
-.v4_bx          0x080014a8        0x0
- .v4_bx         0x080014a8        0x0 linker stubs
+.v4_bx          0x080014d8        0x0
+ .v4_bx         0x080014d8        0x0 linker stubs
 
-.iplt           0x080014a8        0x0
- .iplt          0x080014a8        0x0 d:/peter/programy/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtbegin.o
+.iplt           0x080014d8        0x0
+ .iplt          0x080014d8        0x0 d:/peter/programy/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtbegin.o
 
-.rel.dyn        0x080014a8        0x0
- .rel.iplt      0x080014a8        0x0 d:/peter/programy/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtbegin.o
+.rel.dyn        0x080014d8        0x0
+ .rel.iplt      0x080014d8        0x0 d:/peter/programy/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtbegin.o
 
-.rodata         0x080014a8        0x0
-                0x080014a8                . = ALIGN (0x4)
+.rodata         0x080014d8        0x0
+                0x080014d8                . = ALIGN (0x4)
  *(.rodata)
  *(.rodata*)
-                0x080014a8                . = ALIGN (0x4)
+                0x080014d8                . = ALIGN (0x4)
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
 
-.ARM            0x080014a8        0x0
-                0x080014a8                __exidx_start = .
+.ARM            0x080014d8        0x0
+                0x080014d8                __exidx_start = .
  *(.ARM.exidx*)
-                0x080014a8                __exidx_end = .
+                0x080014d8                __exidx_end = .
 
-.preinit_array  0x080014a8        0x0
-                0x080014a8                PROVIDE (__preinit_array_start, .)
+.preinit_array  0x080014d8        0x0
+                0x080014d8                PROVIDE (__preinit_array_start, .)
  *(.preinit_array*)
-                0x080014a8                PROVIDE (__preinit_array_end, .)
+                0x080014d8                PROVIDE (__preinit_array_end, .)
 
-.init_array     0x080014a8        0x4
-                0x080014a8                PROVIDE (__init_array_start, .)
+.init_array     0x080014d8        0x4
+                0x080014d8                PROVIDE (__init_array_start, .)
  *(SORT(.init_array.*))
  *(.init_array*)
- .init_array    0x080014a8        0x4 d:/peter/programy/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtbegin.o
-                0x080014ac                PROVIDE (__init_array_end, .)
+ .init_array    0x080014d8        0x4 d:/peter/programy/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtbegin.o
+                0x080014dc                PROVIDE (__init_array_end, .)
 
-.fini_array     0x080014ac        0x4
+.fini_array     0x080014dc        0x4
                 [!provide]                PROVIDE (__fini_array_start, .)
  *(SORT(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x080014ac        0x4 d:/peter/programy/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtbegin.o
+ .fini_array    0x080014dc        0x4 d:/peter/programy/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtbegin.o
                 [!provide]                PROVIDE (__fini_array_end, .)
-                0x080014b0                _sidata = LOADADDR (.data)
+                0x080014e0                _sidata = LOADADDR (.data)
 
-.data           0x20000000       0x1c load address 0x080014b0
+.data           0x20000000       0x1c load address 0x080014e0
                 0x20000000                . = ALIGN (0x4)
                 0x20000000                _sdata = .
  *(.data)
@@ -1801,11 +1801,11 @@ LOAD d:/peter/programy/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atol
                 0x2000001c                . = ALIGN (0x4)
                 0x2000001c                _edata = .
 
-.igot.plt       0x2000001c        0x0 load address 0x080014cc
+.igot.plt       0x2000001c        0x0 load address 0x080014fc
  .igot.plt      0x2000001c        0x0 d:/peter/programy/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtbegin.o
                 0x2000001c                . = ALIGN (0x4)
 
-.bss            0x2000001c       0x20 load address 0x080014cc
+.bss            0x2000001c       0x20 load address 0x080014fc
                 0x2000001c                _sbss = .
                 0x2000001c                __bss_start__ = _sbss
  *(.bss)
@@ -1821,7 +1821,7 @@ LOAD d:/peter/programy/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atol
                 0x2000003c                __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x2000003c      0x400 load address 0x080014cc
+                0x2000003c      0x400 load address 0x080014fc
                 0x2000003c                . = ALIGN (0x4)
                 [!provide]                PROVIDE (end, .)
                 [!provide]                PROVIDE (_end, .)
@@ -1932,7 +1932,7 @@ OUTPUT(vrs_cv5.elf elf32-littlearm)
  .debug_ranges  0x00000498       0x20 src\system_stm32l1xx.o
  .debug_ranges  0x000004b8       0x38 src\vrs_cv5.o
 
-.debug_line     0x00000000     0x1d06
+.debug_line     0x00000000     0x1d0a
  .debug_line    0x00000000      0x228 Libraries\STM32L1xx_StdPeriph_Driver\src\misc.o
  .debug_line    0x00000228      0x578 Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_adc.o
  .debug_line    0x000007a0      0x343 Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_gpio.o
@@ -1942,7 +1942,7 @@ OUTPUT(vrs_cv5.elf elf32-littlearm)
  .debug_line    0x00001627       0x7c src\startup_stm32l1xx_hd.o
  .debug_line    0x000016a3      0x1cd src\stm32l1xx_it.o
  .debug_line    0x00001870      0x200 src\system_stm32l1xx.o
- .debug_line    0x00001a70      0x296 src\vrs_cv5.o
+ .debug_line    0x00001a70      0x29a src\vrs_cv5.o
 
 .debug_str      0x00000000     0x1c1c
  .debug_str     0x00000000      0x3ca Libraries\STM32L1xx_StdPeriph_Driver\src\misc.o

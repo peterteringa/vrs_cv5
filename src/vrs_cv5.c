@@ -11,7 +11,7 @@ void LED_init (void){
 	GPIO_InitStruct.GPIO_Pin 	= GPIO_Pin_5;				//pin 5
 	GPIO_InitStruct.GPIO_Mode 	= GPIO_Mode_OUT;			//pin 5 ako vystupny
 	GPIO_InitStruct.GPIO_OType 	= GPIO_OType_PP;			//pin 5 PushPull
-	GPIO_InitStruct.GPIO_Speed 	= GPIO_Speed_400KHz;		//rychlost pinu 400kHz
+	GPIO_InitStruct.GPIO_Speed 	= GPIO_Speed_40MHz;		//rychlost pinu 400kHz
 
 	GPIO_Init(GPIOA, &GPIO_InitStruct);
 
@@ -86,6 +86,8 @@ void nvic_init(void) {
 
 	USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);			//povolenie prerusenia na RXNE
 	USART_ITConfig(USART2, USART_IT_TXE, ENABLE);			//povolenie prerusenia na TXE
+	//USART2->CR1 |= (1 << 6);
+	//USART2->CR1 |= (1 << 7);
 }
 
 void usart_init (void){
