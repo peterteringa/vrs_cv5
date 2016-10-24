@@ -1,6 +1,6 @@
 #include "vrs_cv5.h"
 
-uint16_t AD_value = 0, i = 0;
+uint16_t AD_value = 0;
 
 void LED_init (void){
 
@@ -86,8 +86,6 @@ void nvic_init(void) {
 
 	USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);			//povolenie prerusenia na RXNE
 	USART_ITConfig(USART2, USART_IT_TXE, ENABLE);			//povolenie prerusenia na TXE
-	//USART2->CR1 |= (1 << 6);
-	//USART2->CR1 |= (1 << 7);
 }
 
 void usart_init (void){
@@ -123,33 +121,32 @@ void usart_init (void){
 }
 
 void ADC1_IRQHandler (void){
+
 	if (ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC)){				//ak prerusenie vyvolalo EOC
 		AD_value = ADC_GetConversionValue(ADC1);			//citanie vysledku prevodu
-		if (i == 0) {
-			USART_ClearFlag(USART2, USART_FLAG_TC);			//reset flagu TC
-			USART_SendData(USART2, '_');
-		}
 	}
 }
 
 void USART2_IRQHandler (void){
-	uint16_t napatie[6];
-	uint16_t pom = AD_value;
-	//uint8_t i = 0;
 
-		if (USART_GetFlagStatus(USART2, USART_FLAG_TC)){		//ak prerusenie vyvolalo TC
-			if (i == 0){
-				pom = AD_value*1000/4095*33;					//prepocet na napatie x10^-4
-				napatie[0] 	= 	(pom/10000)%10 + '0';			//prevod ciselnej hodnoty na znaky (+ '0' -> pretypovanie)
-				napatie[1] 	= 	',';
-				napatie[2] 	= 	(pom/1000)%10  + '0';
-				napatie[3] 	= 	(pom/100)%10   + '0';
-				napatie[4] 	= 	'V';
-				napatie[5] 	= 	' ';
-			}
-			USART_ClearFlag(USART2, USART_FLAG_TC);				//reset flagu TC
-			USART_SendData(USART2, napatie[i]);					//odosielanie dat
-			i++;
-			if (i >= 6)	i=0;
+	static uint16_t napatie[6];
+	uint16_t pom = 0;
+	static uint8_t i = 0;
+
+	if (USART_GetFlagStatus(USART2, USART_FLAG_TC)){		//ak prerusenie vyvolalo TC
+		if (i == 0){
+			pom = AD_value*1000/4095*33;					//prepocet na napatie x10^-4
+			napatie[0] 	= 	(pom/10000)%10 + '0';			//prevod ciselnej hodnoty na znaky (+ '0' -> pretypovanie)
+			napatie[1] 	= 	',';
+			napatie[2] 	= 	(pom/1000)%10  + '0';
+			napatie[3] 	= 	(pom/100)%10   + '0';
+			napatie[4] 	= 	'V';
+			napatie[5] 	= 	'\r';
 		}
+
+		USART_ClearFlag(USART2, USART_FLAG_TC);				//reset flagu TC
+		USART_SendData(USART2, napatie[i]);					//odosielanie dat
+		i++;
+		if (i >= 6)	i=0;
+	}
 }

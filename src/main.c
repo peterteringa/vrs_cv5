@@ -70,8 +70,9 @@ int main(void)
   /* TODO - Add your application code here */
   LED_init();
   adc_init();
-  nvic_init();
   usart_init();
+  nvic_init();
+
 
   //ADC_SoftwareStartConv(ADC1);
 
