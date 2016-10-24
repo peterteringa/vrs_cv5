@@ -131,22 +131,41 @@ void USART2_IRQHandler (void){
 
 	static uint16_t napatie[6];
 	uint16_t pom = 0;
-	static uint8_t i = 0;
+	static uint8_t i = 0, format = 0, znaky = 0;
+
+	if (USART_GetFlagStatus(USART2, USART_FLAG_RXNE) && USART_ReceiveData(USART2) == 'm') {
+		format ^= 1;
+		USART_ClearFlag(USART2, USART_FLAG_RXNE);
+	}
 
 	if (USART_GetFlagStatus(USART2, USART_FLAG_TC)){		//ak prerusenie vyvolalo TC
-		if (i == 0){
-			pom = AD_value*1000/4095*33;					//prepocet na napatie x10^-4
-			napatie[0] 	= 	(pom/10000)%10 + '0';			//prevod ciselnej hodnoty na znaky (+ '0' -> pretypovanie)
-			napatie[1] 	= 	',';
-			napatie[2] 	= 	(pom/1000)%10  + '0';
-			napatie[3] 	= 	(pom/100)%10   + '0';
-			napatie[4] 	= 	'V';
-			napatie[5] 	= 	'\r';
+		if (format == 1) {
+			if (i == 0){
+				pom = AD_value*1000/4095*33;					//prepocet na napatie x10^-4
+				napatie[0] 	= 	(pom/10000)%10 + '0';			//prevod ciselnej hodnoty na znaky (+ '0' -> pretypovanie)
+				napatie[1] 	= 	',';
+				napatie[2] 	= 	(pom/1000)%10  + '0';
+				napatie[3] 	= 	(pom/100)%10   + '0';
+				napatie[4] 	= 	'V';
+				napatie[5] 	= 	'\r';
+				znaky = 6;
+			}
+		}
+		if (format == 0) {
+			if (i == 0){
+				pom = AD_value;
+				napatie[0] 	= 	(pom/1000)%10 + '0';
+				napatie[1] 	= 	(pom/100)%10  + '0';
+				napatie[2] 	= 	(pom/10)%10   + '0';
+				napatie[3] 	= 	pom%10 + '0';
+				napatie[4] 	= 	'\r';
+				znaky = 5;
+			}
 		}
 
 		USART_ClearFlag(USART2, USART_FLAG_TC);				//reset flagu TC
 		USART_SendData(USART2, napatie[i]);					//odosielanie dat
 		i++;
-		if (i >= 6)	i=0;
+		if (i >= znaky)	i = 0;
 	}
 }
